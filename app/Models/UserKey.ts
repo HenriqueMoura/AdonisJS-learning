@@ -16,5 +16,5 @@ export default class UserKey extends BaseModel {
   public createdAt: DateTime
 
   @belongsTo(() => User)
-  public user: BelongsTo<typeof User>
+  public User: BelongsTo<typeof User>
 }
