@@ -1,6 +1,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-import Auth from './auth'
+import './auth'
 
 
 Route.get('/', async () => {
