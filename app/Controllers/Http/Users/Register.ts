@@ -35,8 +35,8 @@ export default class UserRegistersController {
 
   public async show({ params }: HttpContextContract) {
     const userKey = await UserKey.findByOrFail('key', params.key)
-    const user = await userKey.related('user').query().firstOrFail()
-    return user
+    userKey.load('user')
+    return userKey.user
   }
   public async update({ request, response }: HttpContextContract) {
     const { key, name, password } = await request.validate(UpdateValidator)
