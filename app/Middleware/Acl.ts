@@ -1,5 +1,4 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import authConfig from 'Config/auth'
 
 export default class Acl {
   public async handle(

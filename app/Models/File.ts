@@ -6,7 +6,6 @@ export default class File extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-
   @column()
   public fileCategory:  fileCategory
   

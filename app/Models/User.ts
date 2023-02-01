@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasMany, HasMany, HasOne, hasOne,  } from '@ioc:Adonis/Lucid/Orm'
 import { UserKey, File } from 'App/Models'
+import { userRole } from 'App/Utils/Roles'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -23,7 +24,7 @@ export default class User extends BaseModel {
   public rememberMeToken: string | null
 
   @column()
-  public role: 'admin' | 'normal'
+  public role: userRole
 
 
   @column.dateTime({ autoCreate: true })
