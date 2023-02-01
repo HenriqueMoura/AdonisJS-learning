@@ -11,6 +11,8 @@ export default class extends BaseSchema {
       table.string('email', 255).notNullable().unique()
       table.string('password', 180)
       table.string('remember_me_token').nullable()
+
+      table.enum('role', ['normal', 'admin']).notNullable().defaultTo('normal')
       
 
       /**
