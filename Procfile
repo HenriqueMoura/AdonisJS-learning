@@ -1,1 +1,1 @@
-web: ENV_SILENT=true node ace migration:run && npm run start
+web: node ace migration:run && npm run start
