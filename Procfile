@@ -1,1 +1,1 @@
-web: node ace migration:run --force && npm run start
+web: node ;/build/ace migration:run --force && npm run start
