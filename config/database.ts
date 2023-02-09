@@ -7,14 +7,17 @@ const databaseConfig: DatabaseConfig = {
   connections: {
     pg: {
       client: 'pg',
-      connection: {
-        host: Env.get('PG_HOST'),
-        port: Env.get('PG_PORT'),
-        user: Env.get('PG_USER'),
-        password: Env.get('PG_PASSWORD', ''),
-        database: Env.get('PG_DB_NAME'),
-        ssl: Env.get('PG_SSL', false),
-      },
+      connection: 
+        Env.get('DATABASE_URL') ?
+        Env.get('DATABASE_URL') : 
+        {
+          host: Env.get('PG_HOST'),
+          port: Env.get('PG_PORT'),
+          user: Env.get('PG_USER'),
+          password: Env.get('PG_PASSWORD', ''),
+          database: Env.get('PG_DB_NAME'),
+          ssl: false,
+        },
       migrations: {
         naturalSort: true,
       },
