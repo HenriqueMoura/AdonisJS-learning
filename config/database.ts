@@ -8,8 +8,6 @@ const databaseConfig: DatabaseConfig = {
     pg: {
       client: 'pg',
       connection: 
-        Env.get('DATABASE_URL') ?
-        Env.get('DATABASE_URL') : 
         {
           host: Env.get('PG_HOST'),
           port: Env.get('PG_PORT'),
