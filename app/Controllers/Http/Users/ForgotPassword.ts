@@ -16,8 +16,6 @@ export default class ForgotPasswordsController {
 
     const link = `http://127.0.0.1:3333/users/forgot-password/${key}`
 
-    console.log({ link })
-
     await Mail.send((message) => {
       message.to(email)
       message.from('contato@facebook.com', 'Facebook')
