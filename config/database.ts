@@ -4,6 +4,8 @@ import { DatabaseConfig } from '@ioc:Adonis/Lucid/Database'
 const databaseConfig: DatabaseConfig = {
   connection: Env.get('DB_CONNECTION'),
 
+  
+
   connections: {
     pg: {
       client: 'pg',
@@ -14,9 +16,6 @@ const databaseConfig: DatabaseConfig = {
           user: Env.get('PG_USER'),
           password: Env.get('PG_PASSWORD', ''),
           database: Env.get('PG_DB_NAME'),
-          ssl: {
-            rejectUnauthorized: false
-          }
         },
       migrations: {
         naturalSort: true,

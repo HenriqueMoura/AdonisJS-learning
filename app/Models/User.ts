@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, hasMany, HasMany, HasOne, hasOne,  } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, hasMany, HasMany, HasOne, hasOne, manyToMany, ManyToMany,  } from '@ioc:Adonis/Lucid/Orm'
 import { UserKey, File } from 'App/Models'
 import { userRole } from 'App/Utils/Roles'
+import { Group } from '@japa/runner'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -26,6 +27,12 @@ export default class User extends BaseModel {
   @column()
   public role: userRole
 
+  @column()
+  public projectId: number
+
+  @column()
+  public groupId: number
+
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -42,7 +49,6 @@ export default class User extends BaseModel {
 
   @hasMany(() => UserKey)
   public key: HasMany<typeof UserKey>
-
 
   @hasOne(() => File, {
     foreignKey:'ownerId',
