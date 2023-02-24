@@ -17,18 +17,27 @@ export default class MainsController {
 
       project.name = data.name
       project.maxGroups = data.maxGroups
-      project.maxUsersPerGroup = data.maxUsersPerGroup
+      project.maxUserPerGroup = data.maxUsersPerGroup
 
       await project.save()
       return response.created(project)
+
     })
   }
 
-  public async show({}: HttpContextContract) {}
+  public async show({request, response}: HttpContextContract) {
+    const project = await Project.findOrFail(request.param('id'))
+    return response.ok(project)
+  }
 
   public async edit({}: HttpContextContract) {}
 
-  public async update({}: HttpContextContract) {}
+  public async update({request, response  }: HttpContextContract) {
+    const project = await Project.findOrFail(request.param('id'))
+    project.merge(request.only(['name', 'maxGroups', 'maxUserPerGroup']))
+    await project.save()
+    return response.ok(project)
+  }
 
   public async destroy({}: HttpContextContract) {}
 }
