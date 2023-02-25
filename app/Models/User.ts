@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasMany, HasMany, HasOne, hasOne,  } from '@ioc:Adonis/Lucid/Orm'
-import { UserKey, File } from 'App/Models'
-import { userRole } from 'App/Utils/Roles'
+import { UserKey, File, Project, GroupStudent } from 'App/Models'
+import { UserRole } from 'App/Utils/Roles'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -24,14 +24,13 @@ export default class User extends BaseModel {
   public rememberMeToken: string | null
 
   @column()
-  public role: userRole
+  public role: UserRole
 
-  @column()
-  public projectId: number
+  @hasMany(() => Project)
+  public projects: HasMany<typeof Project>
 
-  @column()
-  public groupId: number
-
+  @hasMany(() => GroupStudent)
+  public groupStudents: HasMany<typeof GroupStudent>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

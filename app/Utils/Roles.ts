@@ -1,5 +1,7 @@
-const userRoles =  [ 'admin', 'normal'] as const
+const userRoles = { admin: 'admin', normal: 'normal' } as const
 
-type userRole = typeof userRoles[number]
+type UserRole = keyof typeof userRoles
 
-export { userRoles, userRole}
+const rolesArray = Object.keys(userRoles) as UserRole[];
+
+export { userRoles, UserRole, rolesArray }

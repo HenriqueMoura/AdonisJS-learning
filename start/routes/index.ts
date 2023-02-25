@@ -4,6 +4,7 @@ import './auth'
 import './users'
 import './uploads'
 import './project'
+import './groups'
 
 
 

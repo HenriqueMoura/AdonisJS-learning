@@ -1,13 +1,10 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { Project } from 'App/Models'
-import { StoreValidator } from 'App/Validators/Project'
+import { userRoles } from 'App/Utils/Roles'
+import { StoreValidator, UpdateValidator } from 'App/Validators/Project'
 
 export default class MainsController {
-  public async index({}: HttpContextContract) {}
-
-  public async create({}: HttpContextContract) {}
-
   public async store({ request, response, auth }: HttpContextContract) {
     await Database.transaction(async (trx) => {
       const data = await request.validate(StoreValidator)
@@ -21,23 +18,51 @@ export default class MainsController {
 
       await project.save()
       return response.created(project)
-
     })
   }
 
-  public async show({request, response}: HttpContextContract) {
-    const project = await Project.findOrFail(request.param('id'))
-    return response.ok(project)
+  public async show({ response, params }: HttpContextContract) {
+    try {
+      const project = await Project.findOrFail(params.id)
+      return response.ok(project)
+      
+    } catch (error) {
+      if (error.code === 'E_ROW_NOT_FOUND') {
+        return response.notFound({ message: 'Projeto não encontrado' })
+      }
+      throw error
+    }
   }
 
-  public async edit({}: HttpContextContract) {}
-
-  public async update({request, response  }: HttpContextContract) {
-    const project = await Project.findOrFail(request.param('id'))
-    project.merge(request.only(['name', 'maxGroups', 'maxUserPerGroup']))
-    await project.save()
-    return response.ok(project)
+  public async update({ request, response }: HttpContextContract) {
+    const data = await request.validate(UpdateValidator)
+    try {
+      const project = await Project.findOrFail(request.param('id'))
+      project.merge(data)
+      await project.save()
+      return response.ok(project)
+    } catch (error) {
+      if (error.code === 'E_ROW_NOT_FOUND') {
+        return response.notFound({ message: 'Projeto não encontrado' })
+      }
+      throw error
+    }
   }
 
-  public async destroy({}: HttpContextContract) {}
+  public async destroy({ auth, request, response }: HttpContextContract) {
+    try {
+      const project = await Project.findOrFail(request.param('id'))
+
+      // Verifica se o usuário e administrador
+      if (auth.user?.role.includes(userRoles.admin)) {
+        await project.delete()
+        return response.noContent()
+      }
+    } catch (error) {
+      if (error.code === 'E_ROW_NOT_FOUND') {
+        return response.notFound({ message: 'Projeto não encontrado' })
+      }
+      throw error
+    }
+  }
 }

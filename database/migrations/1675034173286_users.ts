@@ -1,5 +1,5 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
-import { userRoles } from 'App/Utils/Roles'
+import { rolesArray } from 'App/Utils/Roles'
 
 export default class extends BaseSchema {
   protected tableName = 'users'
@@ -13,7 +13,7 @@ export default class extends BaseSchema {
       table.string('password', 180)
       table.string('remember_me_token').nullable()
 
-      table.enum('role', userRoles).notNullable().defaultTo('normal')
+      table.enum('role', rolesArray).notNullable().defaultTo('normal')
 
       table.timestamp('created_at', { useTz: true }).notNullable()
       table.timestamp('updated_at', { useTz: true }).notNullable()

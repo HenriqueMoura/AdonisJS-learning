@@ -1,5 +1,7 @@
-const middlewareRoles =  [ 'acl:admin', 'auth'] as const
+const middlewareRoles = { admin: 'acl:admin', auth: 'auth' } as const
 
-type middlewareRole = typeof middlewareRoles[number]
+type middlewareRole = keyof typeof middlewareRoles
 
-export { middlewareRoles, middlewareRole}
+const middlewareArray = Object.keys(middlewareRoles) as middlewareRole[]
+
+export { middlewareRoles, middlewareRole, middlewareArray }

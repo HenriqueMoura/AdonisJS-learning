@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, computed, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import { Group } from 'App/Models'
 
 export default class Project extends BaseModel {
@@ -8,6 +8,12 @@ export default class Project extends BaseModel {
 
   @column()
   public name: string
+
+  @computed()
+  public get pathName(): string{ 
+    const kebabCase = require('lodash.kebabcase')
+    return kebabCase(this.name)
+  }
 
   @column()
   public maxGroups: number

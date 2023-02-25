@@ -7,7 +7,13 @@ export default class Group extends BaseModel {
   public id: number
 
   @column()
+  public name: string
+
+  @column()
   public projectId: number
+
+  @column()
+  public ownerId: number
 
   @belongsTo(() => Project)
   public project: BelongsTo<typeof Project>
