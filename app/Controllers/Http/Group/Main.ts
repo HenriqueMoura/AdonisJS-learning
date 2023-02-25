@@ -11,7 +11,7 @@ export default class MainsController {
       const user = auth.user!.useTransaction(trx)
       const data = await request.validate(StoreValidator)
 
-      const userHasGroup = await GroupStudent.findByOrFail('user_id', user.id)
+      const userHasGroup = await GroupStudent.findBy('user_id', user.id)
       
       if(userHasGroup) {
         return response.badRequest({ message: 'Você já está em um grupo' })
