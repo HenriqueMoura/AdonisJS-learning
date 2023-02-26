@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, hasMany, HasMany, HasOne, hasOne,  } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, hasMany, HasMany, HasOne, hasOne  } from '@ioc:Adonis/Lucid/Orm'
 import { UserKey, File, Project, GroupStudent } from 'App/Models'
 import { UserRole } from 'App/Utils/Roles'
 
@@ -29,9 +29,6 @@ export default class User extends BaseModel {
   @hasMany(() => Project)
   public projects: HasMany<typeof Project>
 
-  @hasMany(() => GroupStudent)
-  public groupStudents: HasMany<typeof GroupStudent>
-
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -46,7 +43,7 @@ export default class User extends BaseModel {
   }
 
   @hasMany(() => UserKey)
-  public key: HasMany<typeof UserKey>
+  public keys: HasMany<typeof UserKey>
 
   @hasOne(() => File, {
     foreignKey:'ownerId',

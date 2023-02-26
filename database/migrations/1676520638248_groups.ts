@@ -8,7 +8,7 @@ export default class Groups extends BaseSchema {
       table.increments('id')
       table.string('name')
       table.integer('project_id').unsigned().references('id').inTable('projects').onUpdate('CASCADE').onDelete('CASCADE')
-      table.integer('owner_id').unsigned().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
+      table.boolean('owner_id').defaultTo(false)
       table.timestamps(true, true)
     })
   }

@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, computed, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
-import { Group } from 'App/Models'
+import { Group, GroupStudent } from 'App/Models'
 
 export default class Project extends BaseModel {
   @column({ isPrimary: true })
@@ -9,12 +9,6 @@ export default class Project extends BaseModel {
   @column()
   public name: string
 
-  @computed()
-  public get pathName(): string{ 
-    const kebabCase = require('lodash.kebabcase')
-    return kebabCase(this.name)
-  }
-
   @column()
   public maxGroups: number
 
@@ -22,11 +16,15 @@ export default class Project extends BaseModel {
   public maxUserPerGroup: number
 
   @hasMany(() => Group)
-  public Group: HasMany<typeof Group>
+  public groups: HasMany<typeof Group>
+
+  @hasMany(() => GroupStudent)
+  public groupStudents: HasMany<typeof GroupStudent>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+  
 }

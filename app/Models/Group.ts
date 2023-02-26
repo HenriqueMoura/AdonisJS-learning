@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, BelongsTo, column, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
-import { Project, User } from 'App/Models'
+import { BaseModel, belongsTo, BelongsTo, column, hasMany, HasMany, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { GroupStudent, Project, User } from 'App/Models'
 
 export default class Group extends BaseModel {
   @column({ isPrimary: true })
@@ -13,7 +13,7 @@ export default class Group extends BaseModel {
   public projectId: number
 
   @column()
-  public ownerId: number
+  public ownerId: Boolean
 
   @belongsTo(() => Project)
   public project: BelongsTo<typeof Project>
