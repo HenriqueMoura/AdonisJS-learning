@@ -10,11 +10,12 @@ export default class UserRegistersController {
 
     await Database.transaction( async (trx) => {
 
-      const { email, redirectUrl } = await request.validate(StoreValidator)
+      const { email, name ,redirectUrl } = await request.validate(StoreValidator)
 
       const user = new User()
       user.useTransaction(trx)
       user.email = email
+      user.name = name
       
       await user.save()
   
@@ -39,6 +40,7 @@ export default class UserRegistersController {
     return userKey.user
   }
   public async update({ request, response }: HttpContextContract) {
+    
     const { key, name, password } = await request.validate(UpdateValidator)
 
     const userKey = await UserKey.findByOrFail('key', key)

@@ -3,6 +3,7 @@ import Database from '@ioc:Adonis/Lucid/Database'
 import { Project } from 'App/Models'
 import { userRoles } from 'App/Utils/Roles'
 import { StoreValidator, UpdateValidator } from 'App/Validators/Project'
+import kebabCase from 'lodash.kebabcase'
 
 export default class MainsController {
   public async store({ request, response, auth }: HttpContextContract) {
@@ -14,7 +15,8 @@ export default class MainsController {
 
       project.name = data.name
       project.maxGroups = data.maxGroups
-      project.maxUserPerGroup = data.maxUsersPerGroup
+      project.maxUserPerGroup = data.maxUserPerGroup
+      project.pathName = await kebabCase(data.name)
 
       await project.save()
       return response.created(project)

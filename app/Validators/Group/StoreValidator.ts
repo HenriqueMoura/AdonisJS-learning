@@ -5,7 +5,7 @@ export default class StoreValidator {
   constructor(protected ctx: HttpContextContract) {}
   public schema = schema.create({
     project_id: schema.number([rules.exists({ table: 'projects', column: 'id' })]),
-    name: schema.string({ trim: true }, [rules.maxLength(255)]),
+    name: schema.string.optional({}, [rules.maxLength(20)]),
   })
 
   public messages: CustomMessages = {}

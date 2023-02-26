@@ -1,16 +1,18 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Database from '@ioc:Adonis/Lucid/Database'
 import { Group, GroupStudent, Project } from 'App/Models'
+import { generateCode } from 'App/Utils/groupCodeGenerator'
 import { StoreValidator } from 'App/Validators/Group'
 
 export default class MainsController {
   public async index({}: HttpContextContract) {}
 
-  public async store({ request, response, auth }: HttpContextContract) {
+  public async store({ request, response, params, auth }: HttpContextContract) {
     const user = auth.user!
     const data = await request.validate(StoreValidator)
+    const pathName = params.pathName
+
     const project = await Project.query()
-      .where('id', data.project_id)
+      .where('pathName', pathName)
       .preload('groups', (query) => {
         query.select('id')
       })
@@ -35,23 +37,34 @@ export default class MainsController {
       })
     }
 
-    const group = new Group()
-    group.name = data.name
-    group.projectId = data.project_id
-    group.ownerId = !userHasGroup
-    await group.save()
+    const group = await Group.create({
+      name: data.name ? data.name : `Grupo de ${user.name}`,
+      projectId: data.project_id,
+      GroupCode: generateCode(),
+      ownerId: !userHasGroup,
+    })
 
-    const groupStudent = new GroupStudent()
-    groupStudent.projectId = data.project_id
-    groupStudent.groupId = group.id
-    groupStudent.userId = user.id
-    await groupStudent.save()
+    await GroupStudent.create({
+      projectId: data.project_id,
+      groupId: group.id,
+      userId: user.id,
+    })
 
     return response.status(201).json(group)
   }
-  public async show({}: HttpContextContract) {}
+  public async show({ request, response, auth, params }: HttpContextContract) {
+    const user = auth.user!
 
-  public async edit({}: HttpContextContract) {}
+    const pathName = params.pathName
+
+    const project = await Project.query()
+      .where('pathName', pathName)
+      .preload('groupStudents', (query) => {
+        query.where('user_id', user.id)
+      })
+
+    return response.ok(project)
+  }
 
   public async update({}: HttpContextContract) {}
 

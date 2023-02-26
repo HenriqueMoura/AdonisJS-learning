@@ -15,6 +15,9 @@ export default class Group extends BaseModel {
   @column()
   public ownerId: Boolean
 
+  @column()
+  public GroupCode: string
+
   @belongsTo(() => Project)
   public project: BelongsTo<typeof Project>
 

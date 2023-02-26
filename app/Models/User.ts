@@ -43,7 +43,7 @@ export default class User extends BaseModel {
   }
 
   @hasMany(() => UserKey)
-  public keys: HasMany<typeof UserKey>
+  public key: HasMany<typeof UserKey>
 
   @hasOne(() => File, {
     foreignKey:'ownerId',

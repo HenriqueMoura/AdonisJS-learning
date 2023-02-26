@@ -9,10 +9,11 @@ export default class StoreValidator {
     name: schema.string({}, [
       rules.minLength(3),
     ]),
+    description: schema.string({}, [rules.minLength(3)]),
     maxGroups: schema.number([
       rules.range(1,100),
     ]),
-    maxUsersPerGroup: schema.number([
+    maxUserPerGroup: schema.number([
       rules.range(1,50),
     ]),
   })
@@ -24,8 +25,8 @@ export default class StoreValidator {
     'maxGroups.required': 'O número máximo de grupos é obrigatório',
     'maxGroups.min': 'O número máximo de grupos deve ser pelo menos 1',
     'maxGroups.max': 'O número máximo de grupos deve ser no máximo 100',
-    'maxUsersPerGroup.required': 'O número máximo de usuários por grupo é obrigatório',
-    'maxUsersPerGroup.min': 'O número máximo de usuários por grupo deve ser pelo menos 1',
-    'maxUsersPerGroup.max': 'O número máximo de usuários por grupo deve ser no máximo 50',
+    'maxUserPerGroup.required': 'O número máximo de usuários por grupo é obrigatório',
+    'maxUserPerGroup.min': 'O número máximo de usuários por grupo deve ser pelo menos 1',
+    'maxUserPerGroup.max': 'O número máximo de usuários por grupo deve ser no máximo 50',
   }
 }
