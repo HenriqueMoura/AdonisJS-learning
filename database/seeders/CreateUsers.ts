@@ -3,19 +3,19 @@ import User from 'App/Models/User'
 import { userRoles } from 'App/Utils/Roles'
 
 export default class extends BaseSeeder {
-  public async run () {
+  public async run() {
     await User.createMany([
       {
-        name:'Admin',
+        name: 'Admin',
         email: 'admin@admin.com',
         password: 'secret',
-        role: userRoles.admin
+        role: userRoles.admin,
       },
       {
-        name:'User',
+        name: 'User',
         email: 'user@user.com',
         password: 'secret',
-        role: userRoles.normal
+        role: userRoles.normal,
       },
     ])
   }

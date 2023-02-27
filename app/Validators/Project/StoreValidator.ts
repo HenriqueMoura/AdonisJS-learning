@@ -6,16 +6,10 @@ export default class StoreValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    name: schema.string({}, [
-      rules.minLength(3),
-    ]),
+    name: schema.string({}, [rules.minLength(3)]),
     description: schema.string({}, [rules.minLength(3)]),
-    maxGroups: schema.number([
-      rules.range(1,100),
-    ]),
-    maxUserPerGroup: schema.number([
-      rules.range(1,50),
-    ]),
+    maxGroups: schema.number([rules.range(1, 100)]),
+    maxUserPerGroup: schema.number([rules.range(1, 50)]),
   })
 
   public messages: CustomMessages = {

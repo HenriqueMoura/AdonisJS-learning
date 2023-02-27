@@ -1,5 +1,5 @@
-import { BaseModel, BelongsTo, belongsTo, column, manyToMany } from '@ioc:Adonis/Lucid/Orm'
-import {User, Group, Project} from 'App/Models'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { User, Group, Project } from 'App/Models'
 
 export default class GroupStudent extends BaseModel {
   @column({ isPrimary: true })

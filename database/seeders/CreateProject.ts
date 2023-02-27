@@ -4,7 +4,7 @@ import { Project } from 'App/Models'
 import kebabCase from 'lodash.kebabcase'
 
 export default class extends BaseSeeder {
-  public async run () {
+  public async run() {
     await Project.createMany([
       {
         name: faker.random.words(3),
@@ -14,11 +14,11 @@ export default class extends BaseSeeder {
         maxUserPerGroup: 2,
       },
       {
-        name: "Meu novo projeto",
-        description: "Este é um projeto incrível que estou trabalhando",
-        pathName: "meu-novo-projeto",
+        name: 'Meu novo projeto',
+        description: 'Este é um projeto incrível que estou trabalhando',
+        pathName: 'meu-novo-projeto',
         maxGroups: 10,
-        maxUserPerGroup: 2
+        maxUserPerGroup: 2,
       },
     ])
   }

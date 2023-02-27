@@ -1,5 +1,5 @@
-const fileCategories =  [ 'avatar', 'post'] as const
+const fileCategories = ['avatar', 'post'] as const
 
-type fileCategory =  typeof fileCategories[number]
+type fileCategory = (typeof fileCategories)[number]
 
-export { fileCategories, fileCategory}
+export { fileCategories, fileCategory }

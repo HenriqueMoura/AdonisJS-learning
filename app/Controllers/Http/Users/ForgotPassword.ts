@@ -44,6 +44,5 @@ export default class ForgotPasswordsController {
     await userKey.delete()
 
     return { message: 'Senha atualizada com sucesso' }
-    
   }
 }

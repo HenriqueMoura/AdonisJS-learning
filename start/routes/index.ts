@@ -6,8 +6,6 @@ import './uploads'
 import './project'
 import './groups'
 
-
-
 Route.get('/user-register', async ({ view }) => {
   return view.render('emails/register')
 })

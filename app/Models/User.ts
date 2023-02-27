@@ -1,8 +1,16 @@
-import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, hasMany, HasMany, HasOne, hasOne  } from '@ioc:Adonis/Lucid/Orm'
-import { UserKey, File, Project, GroupStudent } from 'App/Models'
+import {
+  BaseModel,
+  beforeSave,
+  column,
+  hasMany,
+  HasMany,
+  HasOne,
+  hasOne,
+} from '@ioc:Adonis/Lucid/Orm'
+import { File, Project, UserKey } from 'App/Models'
 import { UserRole } from 'App/Utils/Roles'
+import { DateTime } from 'luxon'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -36,7 +44,7 @@ export default class User extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword (user: User) {
+  public static async hashPassword(user: User) {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }
@@ -46,8 +54,8 @@ export default class User extends BaseModel {
   public key: HasMany<typeof UserKey>
 
   @hasOne(() => File, {
-    foreignKey:'ownerId',
-    onQuery: (query) => query.where({ fileCategory: 'avatar'})
+    foreignKey: 'ownerId',
+    onQuery: (query) => query.where({ fileCategory: 'avatar' }),
   })
   public avatar: HasOne<typeof File>
 }

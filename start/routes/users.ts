@@ -14,5 +14,3 @@ Route.put('/users', 'Users/Main.update').middleware(middlewareRoles.auth)
 
 Route.put('/users/avatar', 'Users/Avatar.update').middleware(middlewareRoles.auth)
 Route.delete('/users/avatar', 'Users/Avatar.destroy').middleware(middlewareRoles.auth)
-
-

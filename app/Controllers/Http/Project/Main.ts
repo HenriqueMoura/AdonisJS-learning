@@ -6,7 +6,7 @@ import { StoreValidator, UpdateValidator } from 'App/Validators/Project'
 import kebabCase from 'lodash.kebabcase'
 
 export default class MainsController {
-  public async store({ request, response, auth }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     await Database.transaction(async (trx) => {
       const data = await request.validate(StoreValidator)
       const project = new Project()
@@ -27,7 +27,6 @@ export default class MainsController {
     try {
       const project = await Project.findOrFail(params.id)
       return response.ok(project)
-      
     } catch (error) {
       if (error.code === 'E_ROW_NOT_FOUND') {
         return response.notFound({ message: 'Projeto não encontrado' })

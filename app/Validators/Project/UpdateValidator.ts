@@ -8,20 +8,11 @@ export default class StoreValidator {
   public schema = schema.create({
     id: schema.number([rules.exists({ table: 'projects', column: 'id' })]),
 
-    name: schema.string({}, [
-      rules.minLength(3),
-      rules.maxLength(255),
-    ]),
+    name: schema.string({}, [rules.minLength(3), rules.maxLength(255)]),
 
-    maxGroups: schema.number([
-      rules.minLength(1),
-      rules.maxLength(100),
-    ]),
-    
-    maxUserPerGroup: schema.number([
-      rules.minLength(1),
-      rules.maxLength(50),
-    ]),
+    maxGroups: schema.number([rules.minLength(1), rules.maxLength(100)]),
+
+    maxUserPerGroup: schema.number([rules.minLength(1), rules.maxLength(50)]),
   })
 
   public messages: CustomMessages = {

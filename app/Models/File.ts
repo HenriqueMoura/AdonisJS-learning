@@ -6,15 +6,15 @@ export default class File extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column({serializeAs: null})
-  public fileCategory:  fileCategory
-  
-  @column({serializeAs: null})
-  public fileName:  string
-  
+  @column({ serializeAs: null })
+  public fileCategory: fileCategory
+
+  @column({ serializeAs: null })
+  public fileName: string
+
   @column({ serializeAs: null })
   public ownerId: number
-  
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -22,7 +22,7 @@ export default class File extends BaseModel {
   public updatedAt: DateTime
 
   @computed()
-  public get url(): string{
+  public get url(): string {
     return `${Env.get('APP_URL')}/uploads/${this.fileName}`
   }
 }

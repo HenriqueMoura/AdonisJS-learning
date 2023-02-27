@@ -5,9 +5,9 @@ export default class StoreValidator {
   constructor(protected ctx: HttpContextContract) {}
   public schema = schema.create({
     file: schema.file({
-      size:'5mb',
-      extnames: ['jpg','png','jpeg']
-    })
+      size: '5mb',
+      extnames: ['jpg', 'png', 'jpeg'],
+    }),
   })
 
   public messages: CustomMessages = {}
