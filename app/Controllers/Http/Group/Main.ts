@@ -10,15 +10,14 @@ export default class MainsController {
     const user = auth.user!
     const data = await request.validate(StoreValidator)
     const pathName = params.pathName
-
     const project = await Project.query()
       .where('pathName', pathName)
-      .preload('groups', (query) => {
-        query.select('id')
-      })
+      .withCount('groups')
       .firstOrFail()
 
-    if (project.groups.length >= project.maxGroups) {
+    const groupCount = project.$extras.groups_count
+
+    if (groupCount > project.maxGroups) {
       return response.badRequest({
         message: 'O projeto já atingiu o limite máximo de grupos.',
       })
@@ -27,7 +26,7 @@ export default class MainsController {
     const userHasGroup = await GroupStudent.query()
       .where('user_id', user.id)
       .whereHas('group', (query) => {
-        query.where('project_id', data.project_id)
+        query.where('project_id', project.id)
       })
       .first()
 
@@ -39,13 +38,13 @@ export default class MainsController {
 
     const group = await Group.create({
       name: data.name ? data.name : `Grupo de ${user.name}`,
-      projectId: data.project_id,
+      projectId: project.id,
       GroupCode: generateCode(),
       ownerId: !userHasGroup,
     })
 
     await GroupStudent.create({
-      projectId: data.project_id,
+      projectId: project.id,
       groupId: group.id,
       userId: user.id,
     })
