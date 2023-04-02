@@ -1,13 +1,13 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column, computed } from '@ioc:Adonis/Lucid/Orm'
-import { fileCategory } from 'App/Utils/fileCategories'
 import Env from '@ioc:Adonis/Core/Env'
+import { BaseModel, column, computed } from '@ioc:Adonis/Lucid/Orm'
+import { FileCategory } from 'App/Utils/Enum /fileCategories'
+import { DateTime } from 'luxon'
 export default class File extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column({ serializeAs: null })
-  public fileCategory: fileCategory
+  public FileCategory: FileCategory
 
   @column({ serializeAs: null })
   public fileName: string

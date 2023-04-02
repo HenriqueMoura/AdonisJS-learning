@@ -1,7 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { Project } from 'App/Models'
-import { userRoles } from 'App/Utils/Roles'
+import { userRoles } from 'App/Utils/Enum /Roles'
 import { StoreValidator, UpdateValidator } from 'App/Validators/Project'
 import kebabCase from 'lodash.kebabcase'
 
@@ -25,7 +25,7 @@ export default class MainsController {
 
   public async show({ response, params }: HttpContextContract) {
     try {
-      const project = await Project.findOrFail(params.id)
+      const project = await Project.findByOrFail('pathName', params.path)
       return response.ok(project)
     } catch (error) {
       if (error.code === 'E_ROW_NOT_FOUND') {
@@ -35,10 +35,10 @@ export default class MainsController {
     }
   }
 
-  public async update({ request, response }: HttpContextContract) {
+  public async update({ request, response, params }: HttpContextContract) {
     const data = await request.validate(UpdateValidator)
     try {
-      const project = await Project.findOrFail(request.param('id'))
+      const project = await Project.findByOrFail('pathName', params.path)
       project.merge(data)
       await project.save()
       return response.ok(project)
@@ -50,11 +50,10 @@ export default class MainsController {
     }
   }
 
-  public async destroy({ auth, request, response }: HttpContextContract) {
+  public async destroy({ auth, response, params }: HttpContextContract) {
     try {
-      const project = await Project.findOrFail(request.param('id'))
+      const project = await Project.findByOrFail('pathName', params.path)
 
-      // Verifica se o usuário e administrador
       if (auth.user?.role.includes(userRoles.admin)) {
         await project.delete()
         return response.noContent()

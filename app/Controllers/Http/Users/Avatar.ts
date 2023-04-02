@@ -4,6 +4,7 @@ import { UpdateValidator } from 'App/Validators/User/Avatar'
 import Application from '@ioc:Adonis/Core/Application'
 import Database from '@ioc:Adonis/Lucid/Database'
 import fs from 'fs'
+
 export default class UserAvatarController {
   public async update({ request, auth }: HttpContextContract) {
     const response = await Database.transaction(async (trx) => {
@@ -12,7 +13,7 @@ export default class UserAvatarController {
 
       const searchPayload = {}
       const savePayload = {
-        fileCategory: 'avatar' as any,
+        FileCategory: 'avatar' as any,
         fileName: `${new Date().getTime()}.${file.extname}`,
       }
 
@@ -34,7 +35,7 @@ export default class UserAvatarController {
       const avatar = await user
         .related('avatar')
         .query()
-        .where({ fileCategory: 'avatar' })
+        .where({ FileCategory: 'avatar' })
         .firstOrFail()
 
       await avatar.delete()

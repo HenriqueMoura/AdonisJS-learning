@@ -1,15 +1,20 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
-import { fileCategories } from 'App/Utils/Enum /fileCategories'
 
 export default class extends BaseSchema {
-  protected tableName = 'files'
+  protected tableName = 'projects_categories'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.enu('file_category', fileCategories).notNullable()
-      table.string('file_name').notNullable()
-      table.integer('owner_id').notNullable()
+      table.string('name').notNullable()
+      table.string('description').notNullable()
+      table
+        .integer('project_id')
+        .unsigned()
+        .references('id')
+        .inTable('projects')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

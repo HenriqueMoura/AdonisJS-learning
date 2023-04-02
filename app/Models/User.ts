@@ -9,7 +9,7 @@ import {
   hasOne,
 } from '@ioc:Adonis/Lucid/Orm'
 import { File, Project, UserKey } from 'App/Models'
-import { UserRole } from 'App/Utils/Roles'
+import { UserRole } from 'App/Utils/Enum /Roles'
 import { DateTime } from 'luxon'
 
 export default class User extends BaseModel {
@@ -55,7 +55,7 @@ export default class User extends BaseModel {
 
   @hasOne(() => File, {
     foreignKey: 'ownerId',
-    onQuery: (query) => query.where({ fileCategory: 'avatar' }),
+    onQuery: (query) => query.where({ FileCategory: 'avatar' }),
   })
   public avatar: HasOne<typeof File>
 }

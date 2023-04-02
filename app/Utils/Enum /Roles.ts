@@ -1,4 +1,4 @@
-const userRoles = { admin: 'admin', normal: 'normal' } as const
+const userRoles = { admin: 'admin', normal: 'normal', professor: 'professor' } as const
 
 type UserRole = keyof typeof userRoles
 
