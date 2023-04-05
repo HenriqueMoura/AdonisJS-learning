@@ -9,12 +9,14 @@ export default class extends BaseSeeder {
         name: 'Admin',
         email: 'admin@admin.com',
         password: 'secret',
+        genre: 'masculino',
         role: userRoles.admin,
       },
       {
         name: 'User',
         email: 'user@user.com',
         password: 'secret',
+        genre: 'feminino',
         role: userRoles.normal,
       },
     ])

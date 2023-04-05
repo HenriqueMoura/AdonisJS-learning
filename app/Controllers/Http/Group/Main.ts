@@ -51,6 +51,7 @@ export default class MainsController {
 
     return response.status(201).json(group)
   }
+
   public async show({ response, auth, params }: HttpContextContract) {
     const user = auth.user!
 

@@ -9,6 +9,12 @@ export default class StoreValidator {
     description: schema.string({}, [rules.minLength(3)]),
     maxGroups: schema.number([rules.range(1, 100)]),
     maxUserPerGroup: schema.number([rules.range(1, 50)]),
+    projectCategories: schema.array().members(
+      schema.object().members({
+        name: schema.string({}, [rules.minLength(3), rules.maxLength(255)]),
+        description: schema.string({}, [rules.minLength(3), rules.maxLength(255)]),
+      })
+    ),
   })
 
   public messages: CustomMessages = {

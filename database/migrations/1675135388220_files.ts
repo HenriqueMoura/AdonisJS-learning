@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.increments('id')
       table.enu('file_category', fileCategories).notNullable()
       table.string('file_name').notNullable()
-      table.integer('owner_id').notNullable()
+      table.integer('owner_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

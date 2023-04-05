@@ -1,6 +1,7 @@
 import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import { Group, GroupStudent } from 'App/Models'
 import { DateTime } from 'luxon'
+import ProjectCategory from './ProjectCategory'
 
 export default class Project extends BaseModel {
   @column({ isPrimary: true })
@@ -26,6 +27,9 @@ export default class Project extends BaseModel {
 
   @hasMany(() => GroupStudent)
   public groupStudents: HasMany<typeof GroupStudent>
+
+  @hasMany(() => ProjectCategory)
+  public projectCategories: HasMany<typeof ProjectCategory>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
