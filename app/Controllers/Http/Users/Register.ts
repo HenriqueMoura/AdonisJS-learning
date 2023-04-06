@@ -8,12 +8,13 @@ import { StoreValidator, UpdateValidator } from 'App/Validators/User/Register'
 export default class UserRegistersController {
   public async store({ request }: HttpContextContract) {
     await Database.transaction(async (trx) => {
-      const { email, name, redirectUrl } = await request.validate(StoreValidator)
+      const { email, name, genre, redirectUrl } = await request.validate(StoreValidator)
 
       const user = new User()
       user.useTransaction(trx)
       user.email = email
       user.name = name
+      user.genre = genre
 
       await user.save()
 
@@ -38,15 +39,17 @@ export default class UserRegistersController {
   }
 
   public async update({ request, response }: HttpContextContract) {
-    const { key, name, password } = await request.validate(UpdateValidator)
+    const { key, name, password, cpf, rg, birthDate, phone } = await request.validate(
+      UpdateValidator
+    )
 
+    const CPF = cpf.replace(/\D/g, '')
+    const RG = rg.replace(/\D/g, '')
     const userKey = await UserKey.findByOrFail('key', key)
-
     const user = await userKey.related('user').query().firstOrFail()
-
     const username = name.split(' ')[0].toLocaleLowerCase() + new Date().getTime()
 
-    user.merge({ name, password, username })
+    user.merge({ name, password, username, CPF, RG, birthDate, phone })
 
     await user.save()
     await userKey.delete()

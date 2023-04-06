@@ -1,5 +1,6 @@
-import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { CustomMessages, rules, schema } from '@ioc:Adonis/Core/Validator'
+import { userGenre } from 'App/Utils/Enum /UserGenre'
 
 export default class StoreValidator {
   constructor(protected ctx: HttpContextContract) {}
@@ -9,6 +10,7 @@ export default class StoreValidator {
       rules.email(),
       rules.unique({ table: 'users', column: 'email' }),
     ]),
+    genre: schema.enum(userGenre),
     redirectUrl: schema.string({ trim: true }),
   })
 
