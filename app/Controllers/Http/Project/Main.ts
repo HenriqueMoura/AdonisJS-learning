@@ -1,7 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { Project } from 'App/Models'
-import ProjectCategory from 'App/Models/ProjectCategory'
 import { userRoles } from 'App/Utils/Enum /Roles'
 import { StoreValidator, UpdateValidator } from 'App/Validators/Project'
 import kebabCase from 'lodash.kebabcase'
@@ -11,22 +10,12 @@ export default class MainsController {
     await Database.transaction(async (trx) => {
       const data = await request.validate(StoreValidator)
       const project = new Project()
-      const projectCategories = new ProjectCategory()
 
       project.useTransaction(trx)
       project.name = data.name
       project.maxGroups = data.maxGroups
       project.maxUserPerGroup = data.maxUserPerGroup
       project.pathName = await kebabCase(data.name)
-
-      await project.save()
-
-      data.projectCategories.forEach(async (category) => {
-        projectCategories.useTransaction(trx)
-        projectCategories.projectId = project.id
-        projectCategories.categoryId = category
-        await projectCategories.save()
-      })
 
       return response.created(project)
     })
