@@ -1,8 +1,8 @@
+import { faker } from '@faker-js/faker'
 import Mail from '@ioc:Adonis/Addons/Mail'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { User, UserKey } from 'App/Models'
 import { StoreValidator, UpdateValidator } from 'App/Validators/User/ForgotPassword'
-import { faker } from '@faker-js/faker'
 
 export default class ForgotPasswordsController {
   public async store({ request, response }: HttpContextContract) {
@@ -34,13 +34,11 @@ export default class ForgotPasswordsController {
     const { key, password } = await request.validate(UpdateValidator)
 
     const userKey = await UserKey.findByOrFail('key', key)
-
     await userKey.load('user')
 
     userKey.user.merge({ password })
 
     await userKey.user.save()
-
     await userKey.delete()
 
     return { message: 'Senha atualizada com sucesso' }

@@ -1,13 +1,21 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { CustomMessages, rules, schema } from '@ioc:Adonis/Core/Validator'
 
-export default class StoreValidator {
+export default class UpdateValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
     name: schema.string({}, [rules.minLength(3), rules.maxLength(255)]),
-    maxGroups: schema.number([rules.minLength(1), rules.maxLength(100)]),
-    maxUserPerGroup: schema.number([rules.minLength(1), rules.maxLength(50)]),
+    description: schema.string(),
+    maxUserPerGroup: schema.number([rules.range(1, 50)]),
+    maxGroups: schema.number([rules.range(1, 100)]),
+    projectCategories: schema.array().members(
+      schema.object().members({
+        id: schema.number.optional([rules.exists({ table: 'projects_categories', column: 'id' })]),
+        name: schema.string({}, [rules.minLength(3), rules.maxLength(255)]),
+        description: schema.string({}, [rules.minLength(3), rules.maxLength(255)]),
+      })
+    ),
   })
 
   public messages: CustomMessages = {
