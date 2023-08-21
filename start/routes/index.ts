@@ -1,8 +1,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 import './auth'
-import './groups'
-import './project'
 import './uploads'
 import './users'
 
